@@ -19,8 +19,8 @@ namespace OCRApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Gemini API endpoint for the 1.5 Flash model
-        private const string GeminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+        // Gemini API endpoint for the 2.5 Flash Preview model
+        private const string GeminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent";
         
         // Current file path
         private string? _currentFilePath;
@@ -415,57 +415,95 @@ namespace OCRApp
         /// </summary>
         private async Task<string> CallGeminiApiAsync(GeminiRequest request, string apiKey)
         {
-            using var httpClient = new HttpClient();
-            
-            // Create the request URL with the API key
-            string requestUrl = $"{GeminiApiEndpoint}?key={apiKey}";
-            
-            // Serialize the request to JSON
-            string jsonRequest = JsonSerializer.Serialize(request, new JsonSerializerOptions
+            try
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            });
-            
-            // Create the HTTP request
-            using var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-            using var httpResponse = await httpClient.PostAsync(requestUrl, content);
-            
-            // Ensure the request was successful
-            httpResponse.EnsureSuccessStatusCode();
-            
-            // Read the response
-            string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
-            
-            // Deserialize the response
-            var response = JsonSerializer.Deserialize<GeminiResponse>(jsonResponse, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            
-            // Check if the response contains any candidates
-            if (response?.Candidates == null || response.Candidates.Length == 0)
-            {
-                throw new Exception("The API response did not contain any candidates.");
-            }
-            
-            var firstCandidate = response.Candidates[0];
-            
-            // Check if the response contains any error
-            if (firstCandidate.Content == null || 
-                firstCandidate.Content.Parts == null || 
-                firstCandidate.Content.Parts.Length == 0)
-            {
-                if (firstCandidate.FinishReason == "SAFETY")
+                using var httpClient = new HttpClient();
+                
+                // Create the request URL with the API key
+                string requestUrl = $"{GeminiApiEndpoint}";
+                
+                // Add the API key as a query parameter
+                if (requestUrl.Contains("?"))
                 {
-                    throw new Exception("The request was blocked due to safety concerns.");
+                    requestUrl += $"&key={apiKey}";
+                }
+                else
+                {
+                    requestUrl += $"?key={apiKey}";
                 }
                 
-                throw new Exception("The API response did not contain any content.");
+                // Debug: Log the API key and endpoint
+                Console.WriteLine($"API Key: {apiKey}");
+                Console.WriteLine($"API Endpoint: {GeminiApiEndpoint}");
+                
+                // Serialize the request to JSON
+                string jsonRequest = JsonSerializer.Serialize(request, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                });
+                
+                // Create the HTTP request
+                using var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+                
+                // Debug: Log the request content
+                Console.WriteLine($"Request Content: {await content.ReadAsStringAsync()}");
+                
+                // Send the request
+                using var httpResponse = await httpClient.PostAsync(requestUrl, content);
+                
+                // Debug: Log the response status code
+                Console.WriteLine($"Response Status Code: {httpResponse.StatusCode}");
+                
+                // If the response was not successful, get the error content
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    string errorContent = await httpResponse.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error Content: {errorContent}");
+                    throw new Exception($"API request failed with status code {httpResponse.StatusCode}: {errorContent}");
+                }
+                
+                // Ensure the request was successful
+                httpResponse.EnsureSuccessStatusCode();
+                
+                // Read the response
+                string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
+                
+                // Deserialize the response
+                var response = JsonSerializer.Deserialize<GeminiResponse>(jsonResponse, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+                
+                // Check if the response contains any candidates
+                if (response?.Candidates == null || response.Candidates.Length == 0)
+                {
+                    throw new Exception("The API response did not contain any candidates.");
+                }
+                
+                var firstCandidate = response.Candidates[0];
+                
+                // Check if the response contains any error
+                if (firstCandidate.Content == null || 
+                    firstCandidate.Content.Parts == null || 
+                    firstCandidate.Content.Parts.Length == 0)
+                {
+                    if (firstCandidate.FinishReason == "SAFETY")
+                    {
+                        throw new Exception("The request was blocked due to safety concerns.");
+                    }
+                    
+                    throw new Exception("The API response did not contain any content.");
+                }
+                
+                // Extract the text from the response
+                return firstCandidate.Content?.Parts?[0]?.Text ?? string.Empty;
             }
-            
-            // Extract the text from the response
-            return firstCandidate.Content?.Parts?[0]?.Text ?? string.Empty;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in CallGeminiApiAsync: {ex.Message}");
+                throw;
+            }
         }
         
         /// <summary>

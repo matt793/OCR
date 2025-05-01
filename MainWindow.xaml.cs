@@ -19,8 +19,8 @@ namespace OCR
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Gemini API endpoint for the 1.5 Flash model
-        private const string GeminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
+        // Gemini API endpoint for the 2.5 Flash Preview model
+        private const string GeminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent";
         
         // API key
         private string _apiKey = "AIzaSyB2ne6U7D9SSi2ip3tX3UUKy7Tp_WFCPp8"; // Fallback API key

@@ -22,7 +22,7 @@ namespace OCRApp
             string? envApiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
             if (!string.IsNullOrEmpty(envApiKey))
             {
-                return envApiKey;
+                return envApiKey.Trim();
             }
             
             // If not found in environment variable, try to read from the apikey.txt file
@@ -33,6 +33,8 @@ namespace OCRApp
                     string apiKey = File.ReadAllText(ApiKeyFilePath).Trim();
                     if (!string.IsNullOrEmpty(apiKey))
                     {
+                        // Debug: Log the API key
+                        Console.WriteLine($"API key loaded from file: {apiKey}");
                         return apiKey;
                     }
                 }
@@ -40,6 +42,10 @@ namespace OCRApp
                 {
                     Console.WriteLine($"Error reading API key file: {ex.Message}");
                 }
+            }
+            else
+            {
+                Console.WriteLine($"API key file not found at: {ApiKeyFilePath}");
             }
             
             // Return null if API key is not found
