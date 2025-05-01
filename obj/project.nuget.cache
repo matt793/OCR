@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "MHtIopYvpEg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\matta\\Music\\OCR\\OCR.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\matta\\.nuget\\packages\\microsoft.win32.systemevents\\9.0.4\\microsoft.win32.systemevents.9.0.4.nupkg.sha512",
+    "C:\\Users\\matta\\.nuget\\packages\\system.drawing.common\\9.0.4\\system.drawing.common.9.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}

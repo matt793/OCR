@@ -1,0 +1,7 @@
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\OCR.csproj.AssemblyReference.cache
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\OCRApp\App.g.cs
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\OCRApp\MainWindow.g.cs
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\App.g.cs
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\OCR_MarkupCompile.cache
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\OCR_MarkupCompile.lref
+C:\Users\matta\Music\OCR\obj\Debug\net9.0-windows\MainWindow.g.cs
