@@ -16,6 +16,7 @@
 
 - [✨ Features](#-features)
 - [🚀 Quick Start](#-quick-start)
+- [🎬 Demo](#-demo)
 - [📋 Requirements](#-requirements)
 - [🔧 Installation](#-installation)
 - [🔑 API Key Setup](#-api-key-setup)
@@ -49,6 +50,12 @@
 3. Run the application and enter your API key
 4. Drag & drop an image or PDF file
 5. View and use the extracted text!
+
+## 🎬 Demo
+
+See the OCR App in action:
+
+![OCR App Demo](gif/OCRVid.gif)
 
 ## 📋 Requirements
 
@@ -235,7 +242,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Google Gemini API for powerful text extraction capabilities
 - .NET Community for the framework and tools
-- All contributors and users of this application
+- Vibe Coded with assistance from the Cline VSCode Plugin and Google's Gemini 2.5 Pro model.
 
 ---
 
