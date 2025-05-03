@@ -76,9 +76,9 @@ Before you begin, ensure you have the following:
 
 ### Method 2: Portable Version
 
-1. Download the latest ZIP file from the releases page
-2. Extract the ZIP file to a location of your choice
-3. Run `OCRApp.exe` or the included batch file to start the application
+1. Download the latest ZIP file (`OCRApp_Release.zip` or similar) from the GitHub Releases page.
+2. Extract the ZIP file to a location of your choice.
+3. Run `OCRApp.exe` found inside the extracted folder to start the application.
 
 ## 🔑 API Key Setup
 
@@ -139,7 +139,9 @@ $env:GEMINI_API_KEY="your_api_key_here"
 
 ### Basic Operation
 
-1. **Launch the application** by double-clicking `OCRApp.exe` or using the provided batch file
+1. **Launch the application:**
+   - **If you downloaded the release:** Double-click `OCRApp.exe` from the folder where you extracted the release ZIP file.
+   - **If you built from source:** Navigate to the build output directory (e.g., `OCRApp\bin\Release\net9.0-windows\`) and double-click `OCRApp.exe`, or run `dotnet run` from the `OCRApp` directory after building.
 2. **Load a file** using one of these methods:
    - Drag and drop an image or PDF file onto the application window
    - Click the "Browse" button to select a file
@@ -185,8 +187,9 @@ If you want to build the application from source:
    - Or press Ctrl+Shift+B
 
 6. Run the application:
-   - Press F5 to start debugging
-   - Or Ctrl+F5 to start without debugging
+   - Press F5 to start debugging.
+   - Or Ctrl+F5 to start without debugging.
+   - The executable will be located in the build output directory, typically `bin\Debug\net9.0-windows\` or `bin\Release\net9.0-windows\`.
 
 ## ❓ Troubleshooting
 
