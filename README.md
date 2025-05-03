@@ -152,7 +152,6 @@ $env:GEMINI_API_KEY="your_api_key_here"
 | Save Text | Ctrl+S |
 | Copy Text | Ctrl+C |
 | Exit | Alt+F4 |
-| Toggle Dark Mode | Ctrl+D |
 
 ## 🛠️ Building from Source
 
